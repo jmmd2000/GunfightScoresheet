@@ -1,0 +1,588 @@
+/*
+
+
+     James Doyle
+     Started 24/7/2021
+     Finished 27/7/2021
+     All code here is developed and created by James Doyle
+     Contact: jamesmddoyle@gmail.com
+              github.com/jmmd2000
+     I am not a graphic designer so the styles are basic
+
+
+*/
+
+body {
+    background-color: #202024;
+    font-family: Verdana;
+    margin: 0;
+}
+
+form {
+    text-align: center;
+}
+
+/* Data entry form */
+#newGame {
+    width: 25%;
+    display: none;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 10;
+    border-radius: 15px;
+    position: fixed;
+    margin-left: 39%;
+    text-align: center;
+    margin-top: -10%;
+}
+
+
+#newGame label {
+    font-size: 22px;
+    color: orange;
+}
+
+#newGame select,
+input {
+    width: 50%;
+    text-align: center;
+    border: 1px solid orange;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#newGame h2 {
+    text-decoration: underline;
+}
+
+#newGame button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 40px;
+    background-color: orange;
+    border: 2px solid #FF7800;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+#newGame button:hover {
+    cursor: pointer;
+}
+
+/* Scroll top/bottom buttons */
+#scrollTop {
+    width: 5%;
+    height: 40px;
+    background-color: orange;
+    border: 2px solid #FF7800;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin: auto;
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 5px;
+    margin-bottom: 10px;
+    float: left;
+}
+
+#scrollBottom {
+    width: 5%;
+    height: 40px;
+    background-color: orange;
+    border: 2px solid #FF7800;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin: auto;
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 5px;
+    margin-bottom: 10px;
+    float: right;
+}
+
+/* Basic button styles */
+#newButton,
+#passButton,
+#enterPassButton {
+    width: 10%;
+    height: 40px;
+    background-color: orange;
+    border: 2px solid #FF7800;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin: auto;
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 5px;
+    margin-bottom: 10px;
+}
+
+#newButton {
+    display: none;
+}
+
+#newButton:hover,
+#passButton:hover,
+#enterPassButton:hover,
+#scrollTop:hover,
+#scrollBottom:hover {
+    cursor: pointer;
+}
+
+#passEntry {
+    position: absolute;
+    background-color: white;
+    border: 5px solid orange;
+    width: 40%;
+    text-align: center;
+    margin: auto;
+    margin-left: 30%;
+    display: none;
+}
+
+#showHideBox {
+    width: 2%;
+}
+
+/* Table styles, shared between pretty much all the tables */
+#totalTable {
+    text-align: center;
+    width: 80%;
+    font-family: Verdana;
+    margin: auto;
+    border: 5px solid orange;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    table-layout: fixed;
+}
+
+
+#totalTable td:nth-child(1) {
+    color: orange;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+#statTable {
+    text-align: center;
+    width: 50%;
+    font-family: Verdana;
+    margin: auto;
+    border: 5px solid orange;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    table-layout: fixed;
+}
+
+#statTable tr {
+    height: 50px;
+    font-size: 20px;
+    border-style: solid;
+    border-width: 1px 1px;
+    border-color: black;
+    margin: 0px;
+}
+
+#statTable td {
+    border-style: solid;
+    border-width: 1px 2px;
+    border-color: black;
+    width: 11.11%;
+}
+
+#statTable tr:nth-child(1) {
+    color: orange;
+    font-weight: bold;
+    font-size: 16px;
+    border-style: solid;
+    border-width: 2px 1px;
+    border-color: black;
+}
+
+#main {
+    text-align: center;
+    width: 80%;
+    font-family: Verdana;
+    margin: auto;
+    border: solid orange;
+    border-width: 0px 5px 5px 5px;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+    table-layout: fixed;
+}
+
+#mainSticky {
+    text-align: center;
+    width: 80%;
+    font-family: Verdana;
+    margin: auto;
+    border: 5px solid orange;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    table-layout: fixed;
+}
+
+#mainSticky td {
+    width: 12.5%;
+}
+
+#mainSticky tr {
+    color: orange;
+    font-weight: bold;
+    font-size: 18px;
+    border-style: solid;
+    border-width: 2px 1px;
+    border-color: black;
+}
+
+tr {
+    height: 50px;
+    font-size: 20px;
+    border-style: solid;
+    border-width: 1px 1px;
+    border-color: black;
+    margin: 0px;
+}
+
+td {
+    border-style: solid;
+    border-width: 1px 2px;
+    border-color: black;
+    width: 10%;
+}
+
+#navbar {
+    list-style: none;
+    text-align: center;
+}
+
+#navbar li {
+    display: inline-block;
+    width: 10%;
+    height: 30px;
+    padding: 10px;
+    font-size: 25px;
+    border: 3px solid orange;
+    color: white;
+
+}
+
+li:hover {
+    cursor: pointer;
+    background-color: #FFB500;
+    color: black;
+}
+
+li:not(.active) {
+    background-color: orange;
+}
+
+li:hover:not(.active) {
+    background-color: #FFB500;
+}
+
+
+.active {
+    background-color: #202024;
+    color: white;
+}
+
+#players {
+    text-align: center;
+    margin-top: 50px;
+    display: none;
+}
+
+#mapsSection {
+    text-align: center;
+    display: none;
+}
+
+#camDiv {
+    border: 5px solid orange;
+    width: 30%;
+    background-color: white;
+    display: inline-block;
+    margin: auto;
+    height: 930px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#jamDiv {
+    border: 5px solid orange;
+    width: 30%;
+    background-color: white;
+    display: inline-block;
+    height: 930px;
+    margin: 0;
+    position: relative;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border: 3px solid orange;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    float: left;
+}
+
+#players h1 {
+    margin-top: 40px;
+}
+
+#jamStats,
+#camStats {
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 50px;
+    border: 3px solid orange;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+    padding: 0px;
+}
+
+
+#jamStats tr:nth-child(1),
+#camStats tr:nth-child(1),
+#jamMapsBW tr:nth-child(1),
+#camMapsBW tr:nth-child(1),
+#jamMapStats th,
+#camMapStats th {
+    color: orange;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#jamBestMap img,
+#jamWorstMap img,
+#camBestMap img,
+#camWorstMap img {
+    display: block;
+    width: 100%;
+}
+
+#jamMapsBW,
+#camMapsBW {
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 5px;
+    border: 3px solid orange;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+#jamMapsBW td,
+#camMapsBW td {
+    width: 50%;
+    padding: 0px;
+}
+
+#jamStats td,
+#camStats td {
+    width: 16.6666%;
+}
+
+#jamMapStats td,
+#camMapStats td {
+    width: 25%;
+}
+
+#jamMapStats,
+#camMapStats {
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 5px;
+    border: 3px solid orange;
+    border-radius: 15px;
+    border-collapse: collapse;
+    background-color: white;
+    padding: 0px;
+}
+
+#jamMapStats th,
+#camMapStats th {
+    border: 2px solid black;
+}
+
+#jamMapStats th:hover,
+#camMapStats th:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.mapDiv {
+    border: 3px solid orange;
+    width: 30%;
+    display: inline-block;
+    height: 500px;
+    margin: 20px 10px 10px 20px;
+    background-color: white;
+    overflow: auto;
+    text-align: center;
+}
+
+.mapDiv img {
+    width: 70%;
+    border: 2px solid orange;
+    position: relative;
+}
+
+.mapDiv h2 {
+    text-decoration: underline;
+    color: orange;
+    display: block;
+}
+
+.mapTable {
+    width: 90%;
+    font-size: 16px;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    border: solid orange;
+    border-width: 3px;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.mapTable1 {
+    width: 90%;
+    font-size: 16px;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    border: solid orange;
+    border-width: 3px;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.mapTable td {
+    width: 20%;
+}
+
+.mapTable1 td {
+    width: 14.28%;
+}
+
+.mapTable tr:nth-child(1),
+.mapTable1 tr:nth-child(1) {
+    color: orange;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.mapTable th {
+    border: 2px solid black;
+}
+
+
+/* Tried to make it look a bit better on mobile devices, still some stuff that could be better fine tuned */
+@media only screen and (max-device-width: 1350px) {
+
+    #jamDiv h1,
+    #camDiv h1 {
+        margin-left: 40%;
+    }
+
+    #jamStats tr:nth-child(1),
+    #camStats tr:nth-child(1) {
+        font-size: 12px;
+    }
+
+    #jamStats tr:nth-child(2),
+    #camStats tr:nth-child(2) {
+        font-size: 22px;
+    }
+
+    .mapTable {
+        font-size: 22px;
+    }
+
+    .mapTable tr:nth-child(1) {
+        font-size: 10px;
+    }
+
+    #newButton,
+    #passButton,
+    #enterPassButton {
+        width: 20%;
+    }
+
+    #newGame {
+        width: 50%;
+        margin-left: 25%;
+    }
+
+    #mainSticky td {
+        width: 12.5%;
+        font-size: 15px;
+    }
+
+    #main td {
+        width: 12.5%;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    #statTable {
+        width: 60%;
+    }
+
+    #statTable td {
+        width: 11.11% !important;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    #jamDiv,
+    #camDiv {
+        height: 850px;
+    }
+
+}
+
+@media only screen and (max-device-width: 1350px) {
+    #statTable td {
+        font-size: 11px;
+    }
+}
