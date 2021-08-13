@@ -8,4 +8,4 @@
 //             github.com/jmmd2000
 //
 //
-var password = "********";
+var password = "jamcam";
