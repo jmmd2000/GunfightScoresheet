@@ -569,14 +569,14 @@ li:hover:not(.active) {
     }
 
     #statTable td {
-        width: 11.11% !important;
+        width: 9.09% !important;
         font-size: 13px;
         font-weight: bold;
     }
 
     #jamDiv,
     #camDiv {
-        height: 850px;
+        height: 880px;
     }
 
 }
