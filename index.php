@@ -1,8 +1,8 @@
 <!-- 
 
      James Doyle
-     Started 24/7/2021
-     Finished 27/7/2021
+     Version 1.0 : Started 24/7/2021 --- Finished 27/7/2021
+     Version 1.1 : Finished 13/8/2021
      All code here is developed and created by James Doyle
      Contact: jamesmddoyle@gmail.com
               github.com/jmmd2000
@@ -51,8 +51,10 @@ include_once 'includes/dbh.inc.php';
     <td>Losses</td>
     <td>Win/Loss</td>
     <td>Win %</td>
-    <td>Camerons K/D</td>
-    <td>Jamies K/D</td>
+    <td>Cam K/D (all time)</td>
+    <td>Cam K/D (last 10)</td>
+    <td>Jam K/D (all time)</td>
+    <td>Jam K/D (last 10)</td>
     <td>Longest Winstreak</td>
     <td>Current Winstreak</td>
     <td># of 6-0s</td>
@@ -63,7 +65,9 @@ include_once 'includes/dbh.inc.php';
     <td id="wlRatio"></td>
     <td id="winPercentage"></td>
     <td id="camKD"></td>
+    <td id="camKDten"></td>
     <td id="jamKD"></td>
+    <td id="jamKDten"></td>
     <td id="longestStreak"></td>
     <td id="currentStreak"></td>
     <td id="sixOhs"></td>
@@ -81,15 +85,16 @@ include_once 'includes/dbh.inc.php';
   <div class="col-md-4">
   <select name="mName" id="maps">
   <option selected="selected">Choose Map</option>
+  <option value="Amsterdam">Amsterdam</option>
   <option value="Diesel">Diesel</option>
-  <option value="Nuketown 84">Nuketown 84</option>
   <option value="Gameshow">Gameshow</option>
   <option value="ICBM">ICBM</option>
-  <option value="U-Bahn">U-Bahn</option>
-  <option value="Amsterdam">Amsterdam</option>
   <option value="KGB">KGB</option>
   <option value="Mansion">Mansion</option>
-</select>
+  <option value="Nuketown 84">Nuketown 84</option>
+  <option value="Showroom">Showroom</option>
+  <option value="U-Bahn">U-Bahn</option>
+  </select>
   </div>
 </div>
 
@@ -364,11 +369,18 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     <td id="NKDCam"></td>
   </tr>
   <tr>
+    <td id="SNameCam">Showroom</td>
+    <td id="SKillsCam"></td>
+    <td id="SDeathsCam"></td>
+    <td id="SKDCam"></td>
+  </tr>
+  <tr>
     <td id="UNameCam">U-Bahn</td>
     <td id="UKillsCam"></td>
     <td id="UDeathsCam"></td>
     <td id="UKDCam"></td>
   </tr>
+  
 </table>
 
 </div>
@@ -462,11 +474,18 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     <td id="NKDJam"></td>
   </tr>
   <tr>
+    <td id="SNameJam">Showroom</td>
+    <td id="SKillsJam"></td>
+    <td id="SDeathsJam"></td>
+    <td id="SKDJam"></td>
+  </tr>
+  <tr>
     <td id="UNameJam">U-Bahn</td>
     <td id="UKillsJam"></td>
     <td id="UDeathsJam"></td>
     <td id="UKDJam"></td>
   </tr>
+  
 </table>
 
 </div>
@@ -500,6 +519,9 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
 
     $u = "SELECT * FROM rounds WHERE mapName = 'U-Bahn'";
     $uResult = mysqli_query($conn, $u);
+
+    $s = "SELECT * FROM rounds WHERE mapName = 'Showroom'";
+    $sResult = mysqli_query($conn, $s);
 
     
     // Echo the start of the maps section table
@@ -645,6 +667,26 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
 
 
 
+    echo "<div id='showroomDiv' class='mapDiv'>";
+    echo "<h2>Showroom</h2>";
+    echo "<img src='assets/show.jpg'>";
+
+    echo "<table id='showroomTableStats' class='mapTable1'>";
+    echo "<tr><td>Wins</td><td>Losses</td><td>Win %</td><td>Cam K/D</td><td>Jam K/D</td>";
+    echo "<tr><td id='showroomWins'></td><td id='showroomLosses'></td><td id='showroomWinPercentage'></td><td id='showroomCamKD'></td><td id='showroomJamKD'></td>";
+    echo "</table>";
+
+    echo "<table id='sTable' class='mapTable'>";
+    echo "<tr><th>Our Score</th><th>Their Score</th><th>Cams Kills</th><th>Cams Deaths</th><th>Jams Kills</th><th>Jams Deaths</th><th>How many left?</th>";
+    
+    while($row = mysqli_fetch_array($sResult)){
+      echo "<tr><td>" . $row['ourScore'] . "</td><td>" . $row['theirScore'] . "</td><td>" . $row['cKills'] . "</td><td>" . $row['cDeaths'] . "</td><td>" . $row['jKills'] . "</td><td>" . $row['jDeaths'] . "</td><td>" . $row['leave'] . "</td></tr>";  //$row['index'] the index here is a field name
+    }
+    echo "</table>";
+    echo "</div>";
+
+
+
     echo "<div id='ubahnDiv' class='mapDiv'>";
     echo "<h2>U-Bahn</h2>";
     echo "<img src='assets/ubahn.jpg'>";
@@ -664,8 +706,11 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     echo "</div>";
 
 
-
     echo "</div>";
+
+
+    $lastTen = "SELECT * FROM rounds ORDER BY ID DESC LIMIT 10";
+    $tenResult = mysqli_query($conn, $lastTen);
 
   ?>
 
@@ -681,7 +726,8 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     var jKILLS = [];
     var jDEATHS = [];
     var enLEFT = [];
-
+    
+    
         var ourscore;
         var theirscore;
         var camkills;
@@ -737,8 +783,10 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
         if(!isNaN(+enemiesleft)){
             enLEFT.push(parseInt(enemiesleft));
         }
+        
       });
 
+      
 
     // Add up all the columns
     var x1 = calcTotal(ourSCORE);
@@ -817,6 +865,9 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     $("#UKillsCam").text(mapStats("U-Bahn",3));
     $("#UDeathsCam").text(mapStats("U-Bahn",4));
     $("#UKDCam").text(round(calcRatio(mapStats("U-Bahn",3),mapStats("U-Bahn",4))));
+    $("#SKillsCam").text(mapStats("Showroom",3));
+    $("#SDeathsCam").text(mapStats("Showroom",4));
+    $("#SKDCam").text(round(calcRatio(mapStats("Showroom",3),mapStats("Showroom",4))));
 
 
     $("#totalJamKills").text(x5);
@@ -850,6 +901,9 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     $("#UKillsJam").text(mapStats("U-Bahn",5));
     $("#UDeathsJam").text(mapStats("U-Bahn",6));
     $("#UKDJam").text(round(calcRatio(mapStats("U-Bahn",5),mapStats("U-Bahn",6))));
+    $("#SKillsJam").text(mapStats("Showroom",5));
+    $("#SDeathsJam").text(mapStats("Showroom",6));
+    $("#SKDJam").text(round(calcRatio(mapStats("Showroom",5),mapStats("Showroom",6))));
 
     $("#amsterdamCamKD").text(round(calcRatio(mapStats("Amsterdam",3),mapStats("Amsterdam",4))));
     $("#dieselCamKD").text(round(calcRatio(mapStats("Diesel",3),mapStats("Diesel",4))));
@@ -859,6 +913,7 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     $("#mansionCamKD").text(round(calcRatio(mapStats("Mansion",3),mapStats("Mansion",4))));
     $("#nukeCamKD").text(round(calcRatio(mapStats("Nuketown 84",3),mapStats("Nuketown 84",4))));
     $("#ubahnCamKD").text(round(calcRatio(mapStats("U-Bahn",3),mapStats("U-Bahn",4))));
+    $("#showroomCamKD").text(round(calcRatio(mapStats("Showroom",3),mapStats("Showroom",4))));
 
     $("#amsterdamJamKD").text(round(calcRatio(mapStats("Amsterdam",5),mapStats("Amsterdam",6))));
     $("#dieselJamKD").text(round(calcRatio(mapStats("Diesel",5),mapStats("Diesel",6))));
@@ -868,6 +923,7 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     $("#mansionJamKD").text(round(calcRatio(mapStats("Mansion",5),mapStats("Mansion",6))));
     $("#nukeJamKD").text(round(calcRatio(mapStats("Nuketown 84",5),mapStats("Nuketown 84",6))));
     $("#ubahnJamKD").text(round(calcRatio(mapStats("U-Bahn",5),mapStats("U-Bahn",6))));
+    $("#showroomJamKD").text(round(calcRatio(mapStats("Showroom",5),mapStats("Showroom",6))));
 
     var atable = $("#amsterdamTable");
     var aWins = 0;
@@ -885,6 +941,8 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
     var nWins = 0;
     var utable = $("#uTable");
     var uWins = 0;
+    var stable = $("#sTable");
+    var sWins = 0;
 
       // Color each map table's rows based on win / loss
       atable.find('tr').each(function (i, el) {
@@ -990,6 +1048,19 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
 
       });
 
+      stable.find('tr').each(function (i, el) {
+        var $tds = $(this).find('td');
+        ourscore = $tds.eq(0).text();
+
+        if(ourscore == "6"){
+            $tds.parent().css( "background-color", "#B4FFB4" );
+            sWins++;
+        }else{
+            $tds.parent().css( "background-color", "#FFB4B4" );
+        }
+
+      });
+
       // This section calculates the win % for each map
       var aTotal = $("#amsterdamTable tr").length;
       var dTotal = $("#dieselTable tr").length;
@@ -999,6 +1070,7 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       var mTotal = $("#manTable tr").length;
       var nTotal = $("#nukeTable tr").length;
       var uTotal = $("#uTable tr").length;
+      var sTotal = $("#sTable tr").length;
 
       $("#amsterdamWins").text(aWins);
       $("#dieselWins").text(dWins);
@@ -1008,6 +1080,7 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       $("#mansionWins").text(mWins);
       $("#nukeWins").text(nWins);
       $("#ubahnWins").text(uWins);
+      $("#showroomWins").text(sWins);
 
       $("#amsterdamLosses").text((aTotal - 1) - aWins);
       $("#dieselLosses").text((dTotal - 1) - dWins);
@@ -1017,6 +1090,7 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       $("#mansionLosses").text((mTotal - 1) - mWins);
       $("#nukeLosses").text((nTotal - 1) - nWins);
       $("#ubahnLosses").text((uTotal - 1) - uWins);
+      $("#showroomLosses").text((sTotal - 1) - sWins);
 
       $("#amsterdamWinPercentage").text(round(winPercentage(aWins, aTotal)));
       $("#dieselWinPercentage").text(round(winPercentage(dWins, dTotal)));
@@ -1026,6 +1100,8 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       $("#mansionWinPercentage").text(round(winPercentage(mWins, mTotal)));
       $("#nukeWinPercentage").text(round(winPercentage(nWins, nTotal)));
       $("#ubahnWinPercentage").text(round(winPercentage(uWins, uTotal)));
+      $("#ubahnWinPercentage").text(round(winPercentage(uWins, uTotal)));
+      $("#showroomWinPercentage").text(round(winPercentage(sWins, sTotal)));
 
       function winPercentage(wins,total){
         var percentage = (wins / (total - 1)) * 100;
@@ -1220,6 +1296,11 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       $("#camBestMapImage").attr("src","assets/ubahn.jpg");
       $("#camBestMapImage").attr("title","U-Bahn");
       break;
+
+      case "Showroom":
+      $("#camBestMapImage").attr("src","assets/show.jpg");
+      $("#camBestMapImage").attr("title","Showroom");
+      break;
     }
 
     switch(camWorstMap[1]){
@@ -1261,6 +1342,11 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       case "U-Bahn":
       $("#camWorstMapImage").attr("src","assets/ubahn.jpg");
       $("#camWorstMapImage").attr("title","U-Bahn");
+      break;
+
+      case "Showroom":
+      $("#camWorstMapImage").attr("src","assets/show.jpg");
+      $("#camWorstMapImage").attr("title","Showroom");
       break;
     }
 
@@ -1305,6 +1391,11 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       $("#jamBestMapImage").attr("src","assets/ubahn.jpg");
       $("#jamBestMapImage").attr("title","U-Bahn");
       break;
+
+      case "Showroom":
+      $("#jamBestMapImage").attr("src","assets/show.jpg");
+      $("#jamBestMapImage").attr("title","Showroom");
+      break;
     }
 
     switch(jamWorstMap[1]){
@@ -1346,6 +1437,11 @@ while($row1 = mysqli_fetch_array($latestRoundQuery)){
       case "U-Bahn":
       $("#jamWorstMapImage").attr("src","assets/ubahn.jpg");
       $("#jamWorstMapImage").attr("title","U-Bahn");
+      break;
+
+      case "Showroom":
+      $("#jamWorstMapImage").attr("src","assets/show.jpg");
+      $("#jamWorstMapImage").attr("title","Showroom");
       break;
     }
 
@@ -1466,6 +1562,28 @@ $('#scrollBottom').click(function() {
 $('#scrollTop').click(function() {
          $("html, body").animate({scrollTop: 0});
      });
+
+
+      // Get the last 10 games worth of kills and deaths
+      var camKillsTen = cKILLS.splice(cKILLS.length-10,cKILLS.length);
+      var camDeathsTen = cDEATHS.splice(cDEATHS.length-10,cDEATHS.length);
+      var jamKillsTen = jKILLS.splice(jKILLS.length-10,jKILLS.length);
+      var jamDeathsTen = jDEATHS.splice(jDEATHS.length-10,jDEATHS.length);
+
+      // Get the totals
+      var c1 = calcTotal(camKillsTen);
+      var c2 = calcTotal(camDeathsTen);
+      var j1 = calcTotal(jamKillsTen);
+      var j2 = calcTotal(jamDeathsTen);
+
+      // Calculate the ratios
+      var c3 = calcRatio(c1,c2);
+      var j3 = calcRatio(j1,j2);
+
+      // Update the table
+      $("#camKDten").text(round(c3));
+      $("#jamKDten").text(round(j3));
+
 
 </script>
 </html>
