@@ -19,7 +19,7 @@ $cK = $_REQUEST['ckills'];
 $cD = $_REQUEST['cdeaths'];
 $jK = $_REQUEST['jkills'];
 $jD = $_REQUEST['jdeaths'];
-$l = $_REQUEST['left'];
+$l = $_REQUEST['left']; 
 
 
 $sql = "INSERT INTO `rounds`(`ID`, `mapName`, `ourScore`, `theirScore`, `cKills`, `cDeaths`, `jKills`, `jDeaths`, `leave`) VALUES ('','$mN', '$oS', '$tS', '$cK', '$cD', '$jK', '$jD', '$l')";

@@ -7,7 +7,7 @@
  * Released under the MIT license.  See included LICENSE.txt
  *  or http://opensource.org/licenses/MIT
  *
- * latest version available at https://github.com/tyleruebele/sort-table
+ * latest version available at https://github.com/tyleruebele/sort-table 
  */
 
 /**
